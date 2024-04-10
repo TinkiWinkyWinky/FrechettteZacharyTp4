@@ -1,0 +1,111 @@
+﻿@model FrechettteZacharyTp4.ViewModels.IndexVM
+
+<button id="boutonFormulaire" class="btn btn-primary mb-3">Créer un client</button>
+
+<span id="span" style="display:none">
+    @await Html.PartialAsync("_ClientFormPartial", Model.clientsCreateVM)
+</span>
+
+<h1>Liste des clients</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Âge</th>
+            <th>Courriel</th>
+            <th>Téléphone</th>
+            <th>Type d'abonnement</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var client in Model.clientsInfoVMList)
+        {
+            @await Html.PartialAsync("_InfoClientPartiel", client)
+        }
+    </tbody>
+</table>
+
+@section scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var boutonFormulaire = document.getElementById("boutonFormulaire");
+            var span = document.getElementById("span");
+
+            boutonFormulaire.addEventListener("click", function () {
+                boutonFormulaire.disabled = true;
+                span.removeAttribute("style");
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var annuler = document.getElementById("annuler");
+            var boutonFormulaire = document.getElementById("boutonFormulaire");
+            var span = document.getElementById("span");
+
+            annuler.addEventListener("click", function () {
+                boutonFormulaire.disabled = false;
+                span.style.display = "none";
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var boutonsSupprimer = document.querySelectorAll(".bouton-supprimer");
+
+            boutonsSupprimer.forEach(function (bouton) {
+                bouton.addEventListener("click", function () {
+                    var clientId = bouton.getAttribute("data-id");
+
+                    fetch("/Clients/Delete/" + clientId, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        }
+                    })
+                    .then(function (response) {
+                        if (response.ok) {
+                            window.location.reload();
+                        } else {
+                            throw new Error('La suppression a échoué.');
+                        }
+                    })
+                    .catch(function (error) {
+                        console.error('Une erreur s\'est produite:', error);
+                    });
+                });
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var form = document.querySelector("form");
+
+            form.addEventListener("submit", function (ev) {
+                ev.preventDefault();
+
+                var form = ev.target;
+                var data = new FormData(form);
+
+                fetch("/Clients/Create/", {
+                    method: "POST",
+                    body: data,
+                })
+                .then(function (response) {
+                    if (!response.ok) {
+                        throw Error(response.statusText);
+                    }
+                    window.location.href = response.url;
+                });
+                .catch(function (error) {
+                    console.error('Une erreur s\'est produite:', error);
+                });
+            });
+        });
+    </script>
+}

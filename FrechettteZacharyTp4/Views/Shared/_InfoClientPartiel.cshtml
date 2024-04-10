@@ -1,0 +1,11 @@
+﻿@model FrechettteZacharyTp4.ViewModels.ClientsInfoVM
+
+<tr>
+    <td>@Model.Nom</td>
+    <td>@Model.Age</td>
+    <td>@Model.Courriel</td>
+    <td>@String.Format("({0}) {1}-{2}", @Model.NoTelephone.Substring(0, 3), @Model.NoTelephone.Substring(3, 3), @Model.NoTelephone.Substring(6))</td>
+    <td>@Model.Type</td>
+    <td><button data-id="@Model.Id" class="btn btn-danger bouton-supprimer">Supprimer</button></td>
+</tr>
+
