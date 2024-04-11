@@ -37,6 +37,7 @@ namespace FrechettteZacharyTp4.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(ClientsCreateVM vm)
         {
             if (ModelState.IsValid)
@@ -49,7 +50,7 @@ namespace FrechettteZacharyTp4.Controllers
                                         .SelectMany(x => x.Errors)
                                         .Select(x => x.ErrorMessage));
             Console.WriteLine(messages);*/
-            return RedirectToAction(nameof(Index));
+            return null;
         }
     }
 }

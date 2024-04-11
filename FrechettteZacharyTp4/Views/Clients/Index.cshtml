@@ -28,9 +28,6 @@
 </table>
 
 @section scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             var boutonFormulaire = document.getElementById("boutonFormulaire");
@@ -101,11 +98,14 @@
                         throw Error(response.statusText);
                     }
                     window.location.href = response.url;
-                });
+                })
                 .catch(function (error) {
                     console.error('Une erreur s\'est produite:', error);
                 });
             });
         });
     </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
