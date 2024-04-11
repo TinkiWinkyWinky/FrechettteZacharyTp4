@@ -20,7 +20,7 @@ namespace FrechettteZacharyTp4.Services
                 Courriel = x.Courriel,
                 NoTelephone = x.NoTelephone,
                 Type = x.Abonnement.Type,
-            }).ToList();
+            }).ToList().OrderByDescending(x => x.Id).ToList();
         }
 
         public bool Remove(int id)
