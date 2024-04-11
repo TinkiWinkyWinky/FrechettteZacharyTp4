@@ -89,9 +89,15 @@
                 var form = ev.target;
                 var data = new FormData(form);
 
+
+                var csrfToken = document.querySelector('input[name="__RequestVerificationToken"]').value;
+
                 fetch("/Clients/Create/", {
                     method: "POST",
                     body: data,
+                    headers: {
+                        "RequestVerificationToken": csrfToken
+                    },
                 })
                 .then(function (response) {
                     if (!response.ok) {

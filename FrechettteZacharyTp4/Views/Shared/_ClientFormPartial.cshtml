@@ -1,6 +1,7 @@
 ﻿@model FrechettteZacharyTp4.ViewModels.ClientsCreateVM
 
 <form asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
     <div class="form-group mb-3">
         <label asp-for="Nom">Nom</label>
         <input asp-for="Nom" class="form-control"/>
