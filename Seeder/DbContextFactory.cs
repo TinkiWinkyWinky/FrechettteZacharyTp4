@@ -10,11 +10,11 @@ namespace Seeder
         {
             IConfigurationRoot configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile(Directory.GetCurrentDirectory() + "/appsettings.Development.json")
+                .AddJsonFile(Directory.GetCurrentDirectory() + "/appsettings.json")
                 .Build();
 
             var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
-            var connectionString = configuration.GetConnectionString("Tp2DbConnString");
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
             builder.UseSqlServer(connectionString);
 
             return new ApplicationDbContext(builder.Options);
